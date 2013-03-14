@@ -13,7 +13,7 @@ def menu
     puts "Press 'a' to add an event."
     puts "Press 'e' to edit an event."
     puts "Press 'd' to delete an event."
-    # puts "Press 'c' to display calendar."
+    puts "Press 'c' to display calendar."
     puts "Press 'x' to exit."
     choice = gets.chomp
     case choice
