@@ -57,7 +57,8 @@ def add_event
       print "Enter the start time of your event:  "
       stop_time = add_time
     when 'v'
-      view_event
+      puts "#{name}    #{start_time}     #{stop_time}"
+      #view_event
     when 's'
       save_event(nil, Event.new(:name => name, :start => start_time, :stop => stop_time))
       return
@@ -111,8 +112,6 @@ def delete_event
   if gets.chomp == 'y'
     event.destroy 
     puts "Deleted event '#{event.name}'"
-  # else
-  #   puts "Event not found."
   end
 end
 
@@ -122,9 +121,7 @@ def edit_event
   event = Event.find(gets.chomp)
   puts "#{event.id}    #{event.name}    #{event.start}     #{event.stop}"
   puts "Is the event that you want to edit: y/n "
-  if gets.chomp == 'n'
-    edit_event
-  end
+  if gets.chomp == 'n' then edit_event  end
   choice = nil
   name = event.name
   start_time = event.start
