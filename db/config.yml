@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  database: calendar2_development
+  host: localhost
+
+test:
+  adapter: postgresql
+  database: calendar2_test
+  host: localhost
