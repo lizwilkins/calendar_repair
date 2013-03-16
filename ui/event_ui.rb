@@ -39,6 +39,7 @@ def add_event
     puts "Press 'v' to view your event."
     puts "Press 'x' to exit."
     choice = gets.chomp
+    stop_time = nil
     case choice
     when 'n'
       print "Enter the name of your event:  "
@@ -46,6 +47,7 @@ def add_event
     when 't1'
       print "Enter the start time of your event (yyyy/mm/dd hh:mm):  "
       start_time = gets.chomp
+      if stop_time == nil then stop_time = start_time end
     when 't2'
       print "Enter the stop time of your event (yyyy/mm/dd hh:mm):  "
       stop_time = gets.chomp
@@ -55,10 +57,16 @@ def add_event
       puts "#{name}    #{start_time}     #{stop_time}"
     when 's'
       event = Event.create(:name => name, :start => start_time, :stop => stop_time, :category_id => category_id)
-      print "Do you want to add a note to your event (y/n):  " 
-      if gets.chomp == 'y'
-        puts 'What would you like to note on your event?'
-        event.notes.create(:name => gets.chomp)
+      if event
+        puts "Entry saved!"
+        print "Do you want to add a note to your event (y/n):  " 
+        if gets.chomp == 'y'
+          puts 'What would you like to note on your event?'
+          event.notes.create(:name => gets.chomp)
+        end
+      else
+        puts "'#{event.name}' was not saved (errors)."
+        event.errors.full_messages.each {|message| puts message}
       end
       return
     when 'x'

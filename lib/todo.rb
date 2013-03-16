@@ -1,5 +1,6 @@
 class Todo < ActiveRecord::Base
-  has_many :notes, :as => :notable
+  has_many :notes, :as => :notable, :dependent => :destroy
 
-  # scope :not_done, where(:done => false)
+
+  scope :not_done, where(:done => false)
 end
