@@ -1,5 +1,8 @@
 require './ui_helper.rb'
 
+# currently can only add newly created note (multiple notes?) to new or existing event/todo, 
+# cannot modify existing note(s) during edit
+
 def event_menu
   choice = nil
   until choice == 'x'
@@ -32,11 +35,11 @@ end
 def add_event
   choice = nil
   until choice == 'x'
-<<<<<<< HEAD
     puts "Press 'n' to enter a name for your event (required)."
     puts "Press 't1' to enter the start date and time for your event (required)."
-    puts "Press 't2' to enter stop date and time for your event."
-    puts "Press 's' to save your event.  You can add a note at this time."
+    puts "Press 't2' to enter the stop date and time for your event."
+    puts "Press 'c' to categorize your event" 
+    puts "Press 's' to save your event.  (You can add a note at this time.)"
     puts "Press 'v' to view your event."
     puts "Press 'x' to exit."
     choice = gets.chomp
@@ -46,53 +49,18 @@ def add_event
       print "Enter the name of your event:  "
       name = gets.chomp
     when 't1'
-      print "Enter the start time of your event (yyyy/mm/dd hh:mm):  "
+      print "Enter the start time of your event (yyyy/mm/dd [hh[:mm]):  "
       start_time = gets.chomp
       if stop_time == nil then stop_time = start_time end
     when 't2'
-      print "Enter the stop time of your event (yyyy/mm/dd hh:mm):  "
+      print "Enter the stop time of your event (yyyy/mm/dd [hh[:mm]):  "
       stop_time = gets.chomp
-=======
-    puts "Press 'n' to enter a name for your event."
-    puts "Press 't1' to enter the start date and time for your event."
-    puts "Press 't2' to enter stop date and time for your event."
-    puts "Press 'c' to categorize your event" 
-    puts "Press 's' to save your event."
-    puts "Press 'v' to view your event."
-    puts "Press 'x' to exit."
-    choice = gets.chomp
-    case choice
-    when 'n'
-      name = add_name
-    when 't1'
-      print "Enter the start time of your event:  "
-      start_time = add_time
-    when 't2'
-      print "Enter the start time of your event:  "
-      stop_time = add_time
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
     when 'c'
       category_id = add_category
     when 'v'
-      puts "#{name}    #{start_time}     #{stop_time}"
+      puts "#{name}    #{start_time}     #{stop_time}    (add category and notes)"
     when 's'
-<<<<<<< HEAD
-      event = Event.create(:name => name, :start => start_time, :stop => stop_time, :category_id => category_id)
-      if event
-        puts "Entry saved!"
-        print "Do you want to add a note to your event (y/n):  " 
-        if gets.chomp == 'y'
-          puts 'What would you like to note on your event?'
-          event.notes.create(:name => gets.chomp)
-        end
-      else
-        puts "'#{event.name}' was not saved (errors)."
-        event.errors.full_messages.each {|message| puts message}
-      end
-=======
       save_event(nil, Event.new(:name => name, :start => start_time, :stop => stop_time, :category_id => category_id))
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
-      return
     when 'x'
       return
     else
@@ -105,7 +73,7 @@ def edit_event
   list_events
   print "Please enter the ID for the event you want to edit: "
   event = Event.find(gets.chomp)
-  puts "#{event.id}    #{event.name}    #{event.start}     #{event.stop}"
+  puts "#{event.id}    #{event.name}    #{event.start}    #{event.stop}    (add category and notes)"
   print "Is the event that you want to edit: y/n "
   if gets.chomp == 'n' then edit_event  end
   choice = nil
@@ -113,8 +81,8 @@ def edit_event
   start_time = event.start
   stop_time = event.stop
   category_id = event.category_id
+  # note = get current note(s)
   until choice == 'x'
-<<<<<<< HEAD
     puts "Press 'n' to add/mod the name for your event."
     puts "Press 't1' to add/mod the start date and time for your event."
     puts "Press 't2' to add/mod the stop date and time for your event."
@@ -122,43 +90,33 @@ def edit_event
     puts "Press 'i' to add/mod a note to the event." 
     puts "Press 's' to save the event."
     puts "Press 'v' to view the event."
-=======
-    puts "Press 'n' to enter a name for your event."
-    puts "Press 't1' to enter the start date and time for your event."
-    puts "Press 't2' to enter stop date and time for your event."
-    puts "Press 'c' to categorize your event"
-    puts "Press 's' to save your event."
-    puts "Press 'v' to view your event."
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
     puts "Press 'x' to exit."
     choice = gets.chomp
     case choice
     when 'n'
-<<<<<<< HEAD
       print "Enter the name of your event:  "
       name = gets.chomp
-    when 'i'  # does not allow for modification of existing note
-      puts 'What would you like to note on your event?'
-      event.notes.create(:name => gets.chomp)
+    when 'i'  # does not allow for modification of existing note only addition fo new
+      print 'What would you like to note on your event:  '
+      note_text = gets.chomp
+      note = event.notes.create(:name => gets.chomp)
+      if note 
+        puts "Note saved!"
+      else
+        puts "'#{note_text}' was not saved."
+        print "Errors:  "
+        event.notes.errors.full_messages.each {|message| puts message}
+      end
     when 't1'
-      print "Enter the start time of your event (yyyy/mm/dd hh:mm):  "
+      print "Enter the start time of your event (yyyy/mm/dd [hh[:mm)]]:  "
       start_time = gets.chomp
     when 't2'
-      print "Enter the stop time of your event (yyyy/mm/dd hh:mm):  "
+      print "Enter the stop time of your event (yyyy/mm/dd [hh[:mm)]]):  "
       stop_time = gets.chomp
-=======
-      name = add_name
-    when 't1'
-      print "Enter the start time of your event:  "
-      start_time = add_time
-    when 't2'
-      print "Enter the start time of your event:  "
-      stop_time = add_time
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
     when 'c'
       category_id = add_category
     when 'v'
-      puts "#{name}    #{start_time}     #{stop_time}"
+      puts "#{name}    #{start_time}     #{stop_time}     (add category and notes)"
     when 's'
       save_event(event, Event.new(:name => name, :start => start_time, :stop => stop_time, :category_id => category_id))
     when 'x'
@@ -169,7 +127,7 @@ def edit_event
   end
 end
 
-def delete_event
+def delete_event  # need error checking
   list_events
   print "Please enter the ID for the event you want to delete: "
   event = Event.find(gets.chomp)
@@ -181,29 +139,44 @@ def delete_event
   end
 end
 
-<<<<<<< HEAD
-=======
-def add_name
-    print "Enter the name of your event:  "
-    gets.chomp
-end
-
-def add_time
-    print "Enter the date of your event (yy/mm/dd hh:mm):  "
-    gets.chomp
-end
-
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
-def save_event(event, new_event)
+def save_event(event, new_event)   # move note code to separate method, error handling needed, too
   if event == nil
+    event = Event.create(:name => name, :start => start_time, :stop => stop_time, :category_id => category_id)
+    if event
+      puts "Entry saved!"
+      print "Do you want to add a note to your event (y/n):  " 
+      if gets.chomp == 'y'
+        puts "What would you like to note on your event?:  "
+        note_text = gets.chomp
+        note = event.notes.create(:name => note_text)
+        if note 
+          puts "Note saved!"
+          return
+        else
+          puts "'#{note_text}' was not saved."
+          print "Errors:  "
+          event.notes.errors.full_messages.each {|message| puts message}
+        end
+      else
+        return
+      end
+    else
+      puts "'#{event.name}' was not saved."
+      print "Errors:  "
+      event.errors.full_messages.each {|message| puts message}
+    end
     Event.new(:name => new_event.name, :start => new_event.start, :stop => new_event.stop, :category_id => new_event.category_id).save
   else
+    # error handling needed
     event.update_attributes(:name => new_event.name, :start => new_event.start, :stop => new_event.stop, :category_id => new_event.category_id)
   end
 end
 
 def list_events
-  Event.all.each { |event| puts " ID: #{event.id}  Event Name: #{event.name}  Start Time: #{event.start} End Time: #{event.stop}" }
+  Event.all.each do |event| 
+    puts " ID: #{event.id}  Event Name: #{event.name}  Start Time: #{event.start} 
+          End Time: #{event.stop}  (add category and notes)" 
+  end
 end
 
 def view_event
@@ -211,14 +184,11 @@ def view_event
   list_events
   print "Please enter the ID for the event you want to view: "
   event = Event.find(gets.chomp)
-  puts "#{event.id}    #{event.name}    #{event.start}     #{event.stop}"
-<<<<<<< HEAD
+  puts "#{event.id}    #{event.name}    #{event.start}     #{event.stop}   (add category and notes)"
   notes = event.notes
   if notes.length != 0
     notes.each {|note| puts "Note:  #{note.name}"} 
   end
-=======
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
 end
 
 def add_category
@@ -238,7 +208,6 @@ def add_category
     add_category
   end
 end
-<<<<<<< HEAD
 
 # def add_note(event)
 #   puts "Here are your notes: "
@@ -260,5 +229,3 @@ end
 #     add_note
 #   end
 # end
-=======
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe

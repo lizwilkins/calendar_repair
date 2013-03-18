@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20130315163444) do
-=======
-ActiveRecord::Schema.define(:version => 20130314165341) do
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -32,7 +28,6 @@ ActiveRecord::Schema.define(:version => 20130314165341) do
     t.datetime "updated_at",  :null => false
   end
 
-<<<<<<< HEAD
   create_table "notes", :force => true do |t|
     t.string   "name"
     t.integer  "notable_id"
@@ -48,6 +43,4 @@ ActiveRecord::Schema.define(:version => 20130314165341) do
     t.datetime "updated_at", :null => false
   end
 
-=======
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
 end

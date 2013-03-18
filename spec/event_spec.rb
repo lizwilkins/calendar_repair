@@ -4,10 +4,7 @@ describe Event do
 
   context 'associations' do
     it {should belong_to :category}
-<<<<<<< HEAD
     it {should have_many(:notes).dependent(:destroy)}
-=======
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
   end
 
   context 'callbacks' do
@@ -17,16 +14,13 @@ describe Event do
       event.name.should eq original_name.downcase
     end
 
-<<<<<<< HEAD
-    it 'shows the start time of an event' do
-=======
+    #it 'shows the start time of an event' do
+
     it 'converts the event name to lowercase' do
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
       time = '2012-12-12 12:12:00 -0800'
       event = FactoryGirl.create(:event, :start => time)
       event.start.should eq time
     end
-<<<<<<< HEAD
 
     it 'orders an event list by datetime stamp' do 
       beginning_date = '2012-12-12'.to_datetime
@@ -38,14 +32,12 @@ describe Event do
 
       Event.all.should match_array [date2, date1, date3]
     end
-=======
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
+
   end
 
   context 'validations' do
     it {should validate_presence_of :name}
     it {should validate_presence_of :start}
-<<<<<<< HEAD
     it {should allow_value('2012/12/12 12:12').for :start}
   end
 
@@ -54,16 +46,19 @@ describe Event do
       beginning_date = '2012-12-12'.to_datetime
       ending_date = '2012-12-18'.to_datetime
 
-      event_that_starts_in_the_range_but_doesnt_end_in_the_range = FactoryGirl.create(:event, :start => beginning_date + 1, :stop => ending_date + 1)
-      event_that_ends_in_the_range_but_doesnt_start_in_the_range = FactoryGirl.create(:event, :start => beginning_date - 1, :stop => ending_date - 1)
-      event_that_starts_before_and_ends_after_the_range = FactoryGirl.create(:event, :start => beginning_date - 1, :stop => ending_date + 1)
+      event_that_starts_in_the_range_but_doesnt_end_in_the_range = 
+        FactoryGirl.create(:event, :start => beginning_date + 1, :stop => ending_date + 1)
+      event_that_ends_in_the_range_but_doesnt_start_in_the_range = 
+        FactoryGirl.create(:event, :start => beginning_date - 1, :stop => ending_date - 1)
+      event_that_starts_before_and_ends_after_the_range = 
+        FactoryGirl.create(:event, :start => beginning_date - 1, :stop => ending_date + 1)
       out_of_range_event = FactoryGirl.create(:event, :start => ending_date + 1)
 
-      Event.starts_before(ending_date).ends_after(beginning_date).should match_array [event_that_starts_in_the_range_but_doesnt_end_in_the_range,
-                                                                   event_that_ends_in_the_range_but_doesnt_start_in_the_range,
-                                                                   event_that_starts_before_and_ends_after_the_range]
+      Event.starts_before(ending_date).ends_after(beginning_date).should 
+        match_array [event_that_starts_in_the_range_but_doesnt_end_in_the_range,
+        event_that_ends_in_the_range_but_doesnt_start_in_the_range,
+        event_that_starts_before_and_ends_after_the_range]
     end
-=======
->>>>>>> 832332fbba9efc72b380231a0aac99e2952d9cbe
   end
+
 end

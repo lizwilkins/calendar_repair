@@ -32,7 +32,6 @@ def todo_menu
   end
 end
 
-
 def add_new_todo
   print "Enter the todo name:  "
   todo = Todo.create(:name => gets.chomp, :done => false)
@@ -69,8 +68,6 @@ def view_todos
     notes.each {|note| puts "Note:  #{note.name}"} 
   end
 end
-
-
 
 def list_todos
   Todo.all.each { |todo| puts "ID: #{todo.id}  todo: #{todo.name} done: #{todo.done}" }
